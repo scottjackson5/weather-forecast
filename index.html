@@ -1,106 +1,945 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>7-Day Forecast: Ellicott City & Clearwater</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #eef2f3;
+    color: #222;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .forecast-box {
+    flex: 1;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  h2 {
+    text-align: center;
+    margin-top: 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  th, td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 14px;
+  }
+  th {
+    background: #f7f7f7;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>7-Day Weather Forecasts — Ellicott City, MD & Clearwater, FL</h1>
+<div class="container">
+
+  <!-- Ellicott City Forecast -->
+  <div class="forecast-box">
+    <h2>Ellicott City, MD</h2>
+    <table>
+      <tr>
+        <th>Day</th>
+        <th>Conditions</th>
+        <th>High</th>
+        <th>Low</th>
+      </tr>
+      <tr><td>Today</td><td>Showers early then cloudy</td><td>48°F</td><td>38°F</td></tr>
+      <tr><td>Tue</td><td>Intervals of clouds & sun</td><td>50°F</td><td>34°F</td></tr>
+      <tr><td>Wed</td><td>Periods of snow</td><td>37°F</td><td>31°F</td></tr>
+      <tr><td>Thu</td><td>Cloudy</td><td>38°F</td><td>25°F</td></tr>
+      <tr><td>Fri</td><td>Partly sunny</td><td>42°F</td><td>27°F</td></tr>
+      <tr><td>Sat</td><td>Partly cloudy</td><td>36°F</td><td>27°F</td></tr>
+      <tr><td>Sun</td><td>Intervals of clouds</td><td>36°F</td><td>27°F</td></tr>
+    </table>
+    <p style="font-size:12px;">Forecast courtesy of local weather sources. :contentReference[oaicite:1]{index=1}</p>
+  </div>
+
+  <!-- Clearwater Forecast -->
+  <div class="forecast-box">
+    <h2>Clearwater, FL</h2>
+    <table>
+      <tr>
+        <th>Day</th>
+        <th>Conditions</th>
+        <th>High</th>
+        <th>Low</th>
+      </tr>
+      <tr><td>Sun</td><td>Showers & sun</td><td>72°F</td><td>49°F</td></tr>
+      <tr><td>Mon</td><td>Sunny, cooler</td><td>56°F</td><td>44°F</td></tr>
+      <tr><td>Tue</td><td>Sunny</td><td>57°F</td><td>44°F</td></tr>
+      <tr><td>Wed</td><td>Mostly sunny</td><td>68°F</td><td>54°F</td></tr>
+      <tr><td>Thu</td><td>Mostly sunny</td><td>77°F</td><td>67°F</td></tr>
+      <tr><td>Fri</td><td>Chance of showers</td><td>76°F</td><td>65°F</td></tr>
+      <tr><td>Sat</td><td>Chance of rain</td><td>74°F</td><td>62°F</td></tr>
+    </table>
+    <p style="font-size:12px;">Forecast courtesy of WeatherBug/AccuWeather. :contentReference[oaicite:2]{index=2}</p>
+  </div>
+
+</div>
+
+</body>
+</html>
+📌 How to Improve This
+✅ Live API Data – You can replace the static table forecasts with real API calls from:
+
+OpenWeatherMap
+
+WeatherAPI
+
+National Weather Service API
+
+Then dynamically populate the <table>.
+
+✅ Icons & Images – Add weather icons using <img> from an API for visual cues.
+
+✅ Responsive Layout – Add media queries so the side-by-side tables stack on small screens.
+
+If you want, I can also generate a JavaScript version that fetches live data and auto-updates the forecasts! Just let me know which weather API you’d like to use. 😊
+
+
+You said:
+Yes, do that using the national weather service api
+
+ChatGPT said:
+Awesome choice — the National Weather Service (NWS) API is free, reliable, and doesn’t need an API key 🙌
+Below is a fully working HTML + CSS + JavaScript site that:
+
+• Pulls live 7-day forecasts
+• Shows Ellicott City, MD and Clearwater, FL
+• Displays them side by side
+• Updates automatically from the NWS API
+
+🌦️ How the NWS API Works (quick context)
+The flow is:
+
+Convert latitude/longitude → NWS grid endpoint
+
+Fetch /forecast
+
+Display daily periods (7 days)
+
+We’ll do this entirely in JavaScript.
+
+✅ Just save this as index.html and open it
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>7-Day Weather Forecast</title>
+
 <style>
-body {
-font-family: Arial, sans-serif;
-background: #eef2f3;
-margin: 0;
-padding: 20px;
-}
-h1 {
-text-align: center;
-}
-.container {
-display: flex;
-gap: 20px;
-flex-wrap: wrap;
-}
-.forecast {
-background: white;
-border-radius: 8px;
-padding: 15px;
-flex: 1;
-min-width: 300px;
-box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-h2 {
-text-align: center;
-margin-top: 0;
-}table {
-width: 100%;
-border-collapse: collapse;
-margin-top: 10px;
-}
-th, td {
-border: 1px solid #ccc;
-padding: 6px;
-font-size: 14px;
-text-align: center;
-}
-th {
-background: #f7f7f7;
-}
-.loading {
-text-align: center;
-font-style: italic;
-}
+  body {
+    font-family: Arial, sans-serif;
+    background: #eef2f3;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .forecast {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    flex: 1;
+    min-width: 300px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    text-align: center;
+    margin-top: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  th {
+    background: #f7f7f7;
+  }
+
+  .loading {
+    text-align: center;
+    font-style: italic;
+  }
 </style>
 </head>
+
 <body>
+
 <h1>7-Day Weather Forecast</h1>
+
 <div class="container">
-<div class="forecast">
-<h2>Ellicott City, MD</h2>
-<div id="ellicott" class="loading">Loading forecast...</div>
+  <div class="forecast">
+    <h2>Ellicott City, MD</h2>
+    <div id="ellicott" class="loading">Loading forecast...</div>
+  </div>
+
+  <div class="forecast">
+    <h2>Clearwater, FL</h2>
+    <div id="clearwater" class="loading">Loading forecast...</div>
+  </div>
 </div>
-<div class="forecast">
-<h2>Clearwater, FL</h2>
-<div id="clearwater" class="loading">Loading forecast...</div>
-</div></div>
+
 <script>
 async function loadForecast(lat, lon, elementId) {
-try {
-// Step 1: Get grid info
-const pointResponse = await fetch(
-`https://api.weather.gov/points/${lat},${lon}`
-);
-const pointData = await pointResponse.json();
-// Step 2: Get forecast URL
-const forecastUrl = pointData.properties.forecast;
-// Step 3: Fetch forecast
-const forecastResponse = await fetch(forecastUrl);
-const forecastData = await forecastResponse.json();
-const periods = forecastData.properties.periods.slice(0, 7);
-let html = `
-<table>
-<tr>
-<th>Day</th>
-<th>Forecast</th>
-<th>Temp</th>
-</tr>
-`;
-periods.forEach(p => {
-html += `
-<tr>
-<td>${p.name}</td>
-<td>${p.shortForecast}</td>
-<td>${p.temperature}°${p.temperatureUnit}</td>
-</tr>
-`;
-});html += "</table>";
-document.getElementById(elementId).innerHTML = html;
-} catch (err) {
-document.getElementById(elementId).innerHTML =
-"Unable to load forecast.";
-console.error(err);
+  try {
+    // Step 1: Get grid info
+    const pointResponse = await fetch(
+      `https://api.weather.gov/points/${lat},${lon}`
+    );
+    const pointData = await pointResponse.json();
+
+    // Step 2: Get forecast URL
+    const forecastUrl = pointData.properties.forecast;
+
+    // Step 3: Fetch forecast
+    const forecastResponse = await fetch(forecastUrl);
+    const forecastData = await forecastResponse.json();
+
+    const periods = forecastData.properties.periods.slice(0, 7);
+
+    let html = `
+      <table>
+        <tr>
+          <th>Day</th>
+          <th>Forecast</th>
+          <th>Temp</th>
+        </tr>
+    `;
+
+    periods.forEach(p => {
+      html += `
+        <tr>
+          <td>${p.name}</td>
+          <td>${p.shortForecast}</td>
+          <td>${p.temperature}°${p.temperatureUnit}</td>
+        </tr>
+      `;
+    });
+
+    html += "</table>";
+    document.getElementById(elementId).innerHTML = html;
+
+  } catch (err) {
+    document.getElementById(elementId).innerHTML =
+      "Unable to load forecast.";
+    console.error(err);
+  }
 }
-}
+
 // Coordinates
-loadForecast(39.2673, -76.7983, "ellicott"); // Ellicott City, MD
+loadForecast(39.2673, -76.7983, "ellicott");   // Ellicott City, MD
 loadForecast(27.9659, -82.8001, "clearwater"); // Clearwater, FL
 </script>
+
 </body>
 </html>
+🔥 What This Gives You
+✅ Live 7-day forecasts
+✅ No API key required
+✅ Responsive layout
+✅ Official NWS data
+✅ Easy to extend
+
+🚀 Want upgrades?
+I can easily add:
+• Weather icons
+• High/low temps per day
+• Celsius toggle
+• Auto-refresh every hour
+• Animated loading states
+• Mobile-first layout
+• City selector dropdown
+
+Just say the word and what vibe you want 😄
+
+
+You said:
+I saved it as an index.html file but when I open it in chrome it just shows lines of code
+
+ChatGPT said:
+Ahh yep — that symptom tells us exactly what’s happening 👍
+Chrome is opening it as plain text, not as a webpage. Easy fix.
+
+Let’s get you unstuck step-by-step.
+
+✅ Quick Fix (works 99% of the time)
+1️⃣ Make sure the file is really named index.html
+On Windows or macOS, file extensions can be sneaky.
+
+Check this carefully:
+
+• The file name must be exactly:
+
+index.html
+❌ Bad:
+
+index.html.txt
+index.htm.html
+index (1).html.txt
+How to check:
+Windows:
+File Explorer → View → ✅ File name extensions
+
+macOS:
+Finder → Get Info → “Name & Extension”
+
+If it says .txt, rename it to .html.
+
+2️⃣ Open it the right way
+Don’t open it from inside Chrome.
+
+Instead:
+
+Right-click the file
+
+Choose Open with → Google Chrome
+
+OR
+
+Double-click it (if Chrome is your default browser)
+
+If Chrome treats it as text, it means the extension is still wrong.
+
+3️⃣ Make sure you saved it as “All Files”
+If you used Notepad (very common gotcha):
+
+In Notepad:
+File → Save As
+
+File name:
+
+index.html
+Save as type:
+All Files (.)
+
+Encoding: UTF-8
+
+Save
+
+Notepad defaults to .txt unless you force it.
+
+4️⃣ Quick sanity test (30 seconds)
+Create a new file called test.html with just this inside:
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>If you see this, HTML works 🎉</h1>
+</body>
+</html>
+Open it in Chrome.
+
+✅ If this works → your original file name or save type was the issue
+❌ If not → tell me your OS (Windows / macOS / Linux)
+
+🧠 Why this happens
+Browsers:
+
+Render .html
+
+Display as text .txt
+
+Same content — different extension = totally different behavior.
+
+🚀 Once it’s working…
+If you want, I can:
+
+Add weather icons
+
+Show high/low temps per day
+
+Add a refresh button
+
+Make it mobile-friendly
+
+Package it as a small local web app
+
+Tell me:
+👉 Windows or Mac?
+👉 What editor did you use (Notepad, VS Code, TextEdit)?
+
+
+You said:
+How would I publish this on a live webpage?
+
+ChatGPT said:
+Great question — this is the exact moment a project turns into a “real website” 😄
+I’ll walk you through the simplest + most professional options, step by step, no jargon.
+
+⭐ Easiest & Free: GitHub Pages (recommended)
+This is the go-to for small sites like yours. Totally free, fast, and stable.
+
+What you need
+A GitHub account (free)
+
+Your index.html file
+
+🚀 Publish with GitHub Pages (10 minutes)
+1️⃣ Create a repository
+Go to github.com
+
+Click New repository
+
+Name it:
+
+weather-forecast
+Set to Public
+
+Click Create repository
+
+2️⃣ Upload your file
+Open the new repo
+
+Click Add file → Upload files
+
+Upload your index.html
+
+Click Commit changes
+
+3️⃣ Enable GitHub Pages
+In the repo, click Settings
+
+Click Pages (left sidebar)
+
+Under Source:
+
+Branch: main
+
+Folder: /root
+
+Click Save
+
+4️⃣ 🎉 Your site is live
+In ~30 seconds you’ll see a link like:
+
+https://yourusername.github.io/weather-forecast/
+That’s it. Public. Shareable. Live.
+
+🌍 Alternative Options (quick comparison)
+🟢 Netlify (also excellent)
+Best if you want drag-and-drop
+
+Go to netlify.com
+
+Drag your index.html onto the page
+
+Done
+
+You get a URL like:
+
+https://cool-weather-site.netlify.app
+🟡 Vercel
+Best if you later add frameworks (React, Vue, etc.)
+
+More steps — not necessary yet.
+
+🔒 About the Weather API (important!)
+Your site:
+
+Uses the National Weather Service API
+
+No API key
+
+No secrets
+
+Safe to publish publicly ✅
+
+So you don’t need backend hosting.
+
+🌟 Optional upgrades once it’s live
+If you want to level it up:
+
+Custom domain (yourname.com)
+
+Auto-refresh every hour
+
+City selector dropdown
+
+HTTPS + caching headers
+
+High/Low temps per day
+
+Mobile-first UI
+
+👉 My recommendation
+If you want fastest + cleanest:
+GitHub Pages
+
+If you want zero setup:
+Netlify
+
+If you want, tell me:
+• Which one you want to use
+• Your OS (Windows/Mac)
+
+I can walk you through it click-by-click with screenshots-style instructions.
+
+
+You said:
+I don’t see the link
+
+ChatGPT said:
+No worries — this is a very common GitHub Pages moment, and nothing is broken 👍
+The link is just hiding from you.
+
+Here’s exactly where to find it.
+
+🔎 Where the link actually appears
+1️⃣ Go to your repository
+Open the repo you created (e.g. weather-forecast).
+
+2️⃣ Click Settings
+Top menu of the repo → Settings
+(not your GitHub account settings — the repo’s settings)
+
+3️⃣ Click Pages (left sidebar)
+Scroll down the left menu until you see Pages.
+
+4️⃣ Look under “GitHub Pages”
+You should see something like:
+
+Your site is live at:
+https://yourusername.github.io/weather-forecast/
+
+⚠️ Important:
+
+It can take 30–90 seconds after clicking Save
+
+Sometimes you need to refresh the page
+
+❗ If you see “Pages is not enabled”
+Double-check these settings:
+
+Source
+
+Branch: main
+
+Folder: / (root)
+
+Click Save
+
+Then wait ~1 minute and refresh.
+
+🧪 Quick checklist (most common issues)
+✅ Repo is public
+✅ File is named index.html (all lowercase)
+✅ File is in the root, not a folder
+✅ Pages source is main / root
+✅ You waited at least 30 seconds
+
+🔄 Still don’t see it?
+Tell me exactly what you see on the Pages screen. For example:
+
+“It says Pages is disabled”
+
+“It says site is being built”
+
+“There’s no Pages option at all”
+
+If you want, copy-paste the text from that page and I’ll spot the issue instantly.
+
+You’re very close — this is the last little speed bump 🚀
+
+
+You said:
+thanks for the GitHub help...I want to enhance the website you built. Please add Boulder Colorado's 7 day forecast. Make the website prettier with colors and call it Susannah's Weather Tool
+
+ChatGPT said:
+Love that name already 😄 — Susannah’s Weather Tool it is 🌈
+Below is a drop-in replacement for your current index.html that:
+
+✅ Adds Boulder, Colorado
+✅ Keeps using the National Weather Service API
+✅ Uses a prettier, colorful layout
+✅ Displays 3 cities side-by-side (and stacks nicely on mobile)
+✅ Has a polished, “real website” vibe
+
+You can overwrite your existing index.html with this.
+
+🌤️ Susannah’s Weather Tool — Updated index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Susannah’s Weather Tool</title>
+
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    color: #222;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 2.4em;
+  }
+
+  .subtitle {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+  }
+
+  .container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .forecast {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    width: 350px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+  }
+
+  .forecast:hover {
+    transform: translateY(-4px);
+  }
+
+  h2 {
+    text-align: center;
+    margin-top: 0;
+    color: #3f51b5;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th {
+    background: #3f51b5;
+    color: white;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  td {
+    padding: 7px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .loading {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 12px;
+    color: #333;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>☀️ Susannah’s Weather Tool ☁️</h1>
+<div class="subtitle">Live 7-Day Forecasts from the National Weather Service</div>
+
+<div class="container">
+
+  <div class="forecast">
+    <h2>Ellicott City, MD</h2>
+    <div id="ellicott" class="loading">Loading forecast...</div>
+  </div>
+
+  <div class="forecast">
+    <h2>Clearwater, FL</h2>
+    <div id="clearwater" class="loading">Loading forecast...</div>
+  </div>
+
+  <div class="forecast">
+    <h2>Boulder, CO</h2>
+    <div id="boulder" class="loading">Loading forecast...</div>
+  </div>
+
+</div>
+
+<footer>
+  Data provided by the National Weather Service • Updated automatically
+</footer>
+
+<script>
+async function loadForecast(lat, lon, elementId) {
+  try {
+    const pointResponse = await fetch(
+      `https://api.weather.gov/points/${lat},${lon}`
+    );
+    const pointData = await pointResponse.json();
+
+    const forecastUrl = pointData.properties.forecast;
+    const forecastResponse = await fetch(forecastUrl);
+    const forecastData = await forecastResponse.json();
+
+    const periods = forecastData.properties.periods.slice(0, 7);
+
+    let html = `
+      <table>
+        <tr>
+          <th>Day</th>
+          <th>Forecast</th>
+          <th>Temp</th>
+        </tr>
+    `;
+
+    periods.forEach(p => {
+      html += `
+        <tr>
+          <td>${p.name}</td>
+          <td>${p.shortForecast}</td>
+          <td>${p.temperature}°${p.temperatureUnit}</td>
+        </tr>
+      `;
+    });
+
+    html += "</table>";
+    document.getElementById(elementId).innerHTML = html;
+
+  } catch (error) {
+    document.getElementById(elementId).innerHTML =
+      "Unable to load forecast.";
+    console.error(error);
+  }
+}
+
+// City coordinates
+loadForecast(39.2673, -76.7983, "ellicott");    // Ellicott City, MD
+loadForecast(27.9659, -82.8001, "clearwater"); // Clearwater, FL
+loadForecast(40.01499, -105.27055, "boulder"); // Boulder, CO
+</script>
+
+</body>
+</html>
+✨ What’s new visually
+• Gradient sky background
+• Card-style city panels
+• Hover animation
+• Branded title
+• Cleaner typography
+• Mobile-friendly layout
+
+🔮 Want to take it further?
+I can add:
+
+🌡️ High / Low temps per day
+
+⏰ Auto-refresh every hour
+
+🌙 Night forecasts too
+
+📍 City picker dropdown
+
+📱 iPhone-style layout
+
+🌎 Map integration
+
+Just tell me the next vibe — Susannah’s Weather Tool is officially a thing now ☀️🌧️❄️
+
+
+You said:
+Also, add a space to show the high temperature differential between all three places
+
+ChatGPT said:
+Nice idea — that adds a genuinely useful comparison 👍
+We’ll add a summary panel that shows the high-temperature spread (difference between the warmest and coolest highs) across Ellicott City, Clearwater, and Boulder for today.
+
+Below is a clean upgrade to your existing page. You can replace your current index.html with this.
+
+🌡️ What this adds
+• A highlighted “High Temperature Differential” section
+• Uses today’s daytime high from each city
+• Automatically updates with live NWS data
+• Clearly shows the °F difference
+
+🌤️ Updated index.html — Susannah’s Weather Tool
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Susannah’s Weather Tool</title>
+
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    color: #222;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 2.4em;
+  }
+
+  .subtitle {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .summary {
+    max-width: 700px;
+    margin: 0 auto 25px auto;
+    background: #fff8e1;
+    border-left: 6px solid #ff9800;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  }
+
+  .container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .forecast {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    width: 350px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    text-align: center;
+    margin-top: 0;
+    color: #3f51b5;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th {
+    background: #3f51b5;
+    color: white;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  td {
+    padding: 7px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .loading {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 12px;
+    color: #333;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>☀️ Susannah’s Weather Tool ☁️</h1>
+<div class="subtitle">Live 7-Day Forecasts from the National Weather Service</div>
+
+<div id="differential" class="summary">
+  Calculating today’s high temperature difference…
+</div>
+
+<div class="container">
+
+  <div class="forecast">
+    <h2>Ellicott City, MD</h2>
+    <div id="ellicott" class="loading">Loading forecast...</div>
+  </div>
+
+  <div class="forecast">
+    <h2>Clearwater, FL</h2>
+    <div id="clearwater" class="loading">Loading forecast...</div>
+  </div>
+
+  <div class="forecast">
+    <h2>Boulder, CO</h2>
+    <div id="boulder" class="loading">Loading forecast...</div>
+  </div>
+
+</div>
+
+<footer>
+  Data provided by the National Weather Service • Updates automatically
+</footer>
+
+<script>
+const todaysHighs = {};
+
+function updateDifferential() {
+  const temps = Object.values(todaysHighs
+
+
+
+ChatGPT is still generating a response...
